@@ -23,7 +23,7 @@ export const Login = () => {
     <Form.Control type="email" placeholder = "Enter email" value={email} required onChange={(e)=>setEmail(e.target.value)}/>
 </Form.Group>
 
-<Form.Group>
+<Form.Group className="mb-3">
     <Form.Label>
        Password
     </Form.Label>

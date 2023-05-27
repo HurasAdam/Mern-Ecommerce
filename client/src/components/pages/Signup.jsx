@@ -1,11 +1,18 @@
+import { useState } from "react"
+import '../pages/Signup.css'
 import { Col, Container,Row,Form,Button } from "react-bootstrap"
+import { Link } from "react-router-dom";
 
 
 export const Signup = () => {
+
+const [email,setEmail]=useState('');
+const [password,setPassword]=useState('')
+
   return (
     <Container>
     <Row>
-        <Col md={6} className="login__form--container">
+        <Col md={6} className="signup__form--container">
             <Form style={{width:"100%"}}>
 <h1>Create an account</h1>
 <Form.Group>
@@ -28,7 +35,9 @@ export const Signup = () => {
 </Form.Group>
             </Form>
         </Col>
-        <Col md={6} className='signup__image--container'></Col>
+        <Col md={6} className='signup__image--container'>
+         
+        </Col>
     </Row>
 </Container>
   )

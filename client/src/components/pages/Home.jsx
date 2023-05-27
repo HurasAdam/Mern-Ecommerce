@@ -2,6 +2,6 @@
 
 export const Home = () => {
   return (
-    <div>Home Page</div>
+    <div className="home">XD</div>
   )
 }
