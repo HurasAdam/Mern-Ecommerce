@@ -3,10 +3,10 @@ const User= require('../models/User');
 
 // Signup
 
-router.post('signup',async(req,res)=>{
+router.post('/signup',async(req,res)=>{
     const {name,email,password}=req.body
     try{
-        const user= await.User.create({name,email,password});
+        const user= await User.create({name,email,password});
     }catch(e){
         if(e.code===11000) return res.status(400).json("Email already exists");
            res.status(400).send(e.message);
