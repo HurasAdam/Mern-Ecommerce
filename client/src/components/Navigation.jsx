@@ -1,20 +1,25 @@
-import {Navbar,NavDropdown,Nav,Container} from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
-import '../components/Navigation.css'
+import { Navbar, NavDropdown, Nav, Container } from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
+import "../components/Navigation.css";
+import { useSelector } from "react-redux";
 
 export const Navigation = () => {
+  const user = useSelector((state) => state.user);
   return (
     <Navbar bg="light" expand="lg">
       <Container>
-       <LinkContainer to='/'>
-       <Navbar.Brand>Ecommerce</Navbar.Brand>
-       </LinkContainer>
+        <LinkContainer to="/">
+          <Navbar.Brand>Ecommerce</Navbar.Brand>
+        </LinkContainer>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-
-            <Nav.Link href="/login">Login</Nav.Link>
-            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+            {!user&&
+            <LinkContainer to={'/login'}>
+              <Nav.Link>Login</Nav.Link>
+            </LinkContainer>
+}
+            {user&&(<NavDropdown title="Dropdown" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">
                 Another action
@@ -24,10 +29,10 @@ export const Navigation = () => {
               <NavDropdown.Item href="#action/3.4">
                 Separated link
               </NavDropdown.Item>
-            </NavDropdown>
+            </NavDropdown>)}
           </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
-  )
-}
+  );
+};

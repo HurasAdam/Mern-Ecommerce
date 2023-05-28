@@ -1,13 +1,29 @@
-import {createSlice} from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
 
-// AppApi
-
-import appApi  from '../services/appApi';
+// appApi
+import appApi from "../services/appApi"
 
 const initialState = null;
+
 export const userSlice = createSlice({
-    name:'user',
+    name: "user",
     initialState,
-    reducers:{},
-})
+    reducers: {
+        logout: () => initialState,
+        addNotification: (state, action) => {
+            state.notifications.unshift(action.payload);
+        },
+        resetNotifications: (state) => {
+            state.notifications.forEach((obj) => {
+                obj.status = "read";
+            });
+        },
+    },
+    extraReducers: (builder) => {
+        builder.addMatcher(appApi.endpoints.signup.matchFulfilled, (_, { payload }) => payload);
+        builder.addMatcher(appApi.endpoints.login.matchFulfilled, (_, { payload }) => payload);
+        
+    },
+});
+export const { logout, addNotification, resetNotifications } = userSlice.actions;
 export default userSlice.reducer;
