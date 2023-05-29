@@ -10,7 +10,7 @@ export const Navigation = () => {
 
 
 function handleLogout(){
-dispatch(logout)
+dispatch(logout())
 }
 
   return (

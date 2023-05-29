@@ -43,7 +43,7 @@ const userSchema= new Schema({
     orders:[{type:mongoose.Schema.Types.ObjectId,ref:'Order'}]
 },{minimize:false})
 
-userSchema.static.findByCredentials= async function(email,password){
+userSchema.statics.findByCredentials= async (email,password)=>{
     const user = await User.findOne({email});
     if(!user)throw new Error('Invalid credentials')
     const isSamePassword = bcrypt.compareSync(password,user.password);
@@ -79,4 +79,4 @@ userSchema.pre('remove',function(next){
 })
 const User= mongoose.model("User",userSchema);
 
-module.exports=User
+module.exports={User}

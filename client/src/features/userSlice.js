@@ -9,7 +9,9 @@ export const userSlice = createSlice({
     name: "user",
     initialState,
     reducers: {
-        logout: () => initialState,
+        logout: () =>{
+            return initialState
+        } ,
         addNotification: (state, action) => {
             state.notifications.unshift(action.payload);
         },
