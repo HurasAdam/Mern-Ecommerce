@@ -1,27 +1,32 @@
-
-import './App.css'
-import 'bootstrap/dist/css/bootstrap.min.css';
-import {Navigation} from './components/Navigation'
-import {BrowserRouter,Routes,Route} from 'react-router-dom'
-import {Home} from './components/pages/Home'
-import { Login } from './components/pages/Login';
-import { Signup } from './components/pages/Signup';
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Navigation } from "./components/Navigation";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Home } from "./components/pages/Home";
+import { Login } from "./components/pages/Login";
+import { Signup } from "./components/pages/Signup";
+import { useSelector } from "react-redux";
 function App() {
-
+  const user = useSelector((state) => state.user);
   return (
- <div className="App">
-<BrowserRouter>
-<Navigation/>
-  <Routes>
-  <Route index element={<Home />} />
-<Route path='*' element={<Home/>}/>
-<Route path="/login" element={<Login />} />
-<Route path="/signup" element={<Signup />} />
-  </Routes>
+    <div className="App">
+      <BrowserRouter>
+        <Navigation />
+        <Routes>
+          <Route index element={<Home />} />
 
-</BrowserRouter>
- </div>
-  )
+          {!user && (
+            <>
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+            </>
+          )}
+
+          <Route path="*" element={<Home />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
+  );
 }
 
-export default App
+export default App;
