@@ -43,7 +43,7 @@ res.status(400).json(e.message)
 
 // Delete product
 
-router.delete('/:id',(req,res)=>{
+router.delete('/:id',async(req,res)=>{
 const {id}=req.params;
 const {user_id}=req.body;
     try{
@@ -59,7 +59,7 @@ res.status(200).json(products);
 
 // get single product 
 
-router.get('/:id',(req,res)=>{
+router.get('/:id',async(req,res)=>{
 
     const {id}=req.params
     try{

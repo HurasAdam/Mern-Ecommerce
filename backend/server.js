@@ -13,10 +13,12 @@ const io = new Server(server,{
 const User= require('./models/User');
 const { default: mongoose } = require('mongoose');
 const userRoutes=require('./routes/userRoutes')
+const productRoutes= require('./routes/productRoutes')
 app.use(cors());
 app.use(express.urlencoded({extended:true}));
 app.use(express.json());
 app.use('/users',userRoutes)
+app.use('products',productRoutes)
 
 
 mongoose.connect(process.env.MONGO_URI)
