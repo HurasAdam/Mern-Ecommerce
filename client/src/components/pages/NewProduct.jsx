@@ -103,12 +103,7 @@ export const NewProduct = () => {
                 Create Product
               </Button>
               <div className="images-preview-container">
-           {images.map((img)=>{
-            return (<div className="image-preview">
-              <img src={image.ulr}/>
-              {/* {*add icon for removing} */}
-            </div>)
-           })}
+         
               </div>
             </Form.Group>
           </Form>
