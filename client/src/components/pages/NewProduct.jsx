@@ -16,19 +16,20 @@ export const NewProduct = () => {
     useCreateProductMutation();
 
 
-    function showWidget(){
-      const widget= window.cloudinary.createUploadWidget({
-        cloudName:'',
-        uploadPreset:""
-      },
-      (error,result)=>{
-        if(error&&result.event==='success')
-        setImages((prev)=>[...prev,{url:result.info.url,public_id:result.info.public_id}])
-      }
-
+    function showWidget() {
+      const widget = window.cloudinary.createUploadWidget(
+          {
+              cloudName: "dxupb5ce8",
+              uploadPreset: "qrlmprdr",
+          },
+          (error, result) => {
+              if (!error && result.event === "success") {
+                  setImages((prev) => [...prev, { url: result.info.url, public_id: result.info.public_id }]);
+              }
+          }
       );
-      widget.open()
-    }
+      widget.open();
+  }
 
   return (
     <div>
