@@ -3,18 +3,43 @@ import "./NewProduct.css";
 import { useNavigate } from "react-router-dom";
 import { useCreateProductMutation } from "../../services/appApi";
 import { Alert, Col, Container, Form, Row, Button } from "react-bootstrap";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleXmark } from '@fortawesome/free-solid-svg-icons'
+import axios from "../../axios"
 
 export const NewProduct = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState("");
-  const [images, setImages] = useState("");
+  const [images, setImages] = useState([]);
   const navigate = useNavigate();
   const [imgToRemove, setImgToRemove] = useState(null);
   const [createProduct, { isError, error, isLoading, isSuccess }] =
     useCreateProductMutation();
 
+
+function handleRemoveImg(imgObj){
+  setImgToRemove(imgObj.public_id)
+  axios.delete(`/images/${imgObj.public_id}`)
+  .then((res)=>{
+    setImgToRemove(null)
+    setImages(prev=>prev.filter((img)=>img.public_id!==imgObj.public_id))
+  }).catch(e=>console.log(e))
+}
+
+// function handleSubmit(e){
+//   e.preventDefault();
+//   if(!name||!description||!price||!category||images.length)
+//   return alert("Pleas fill out all the fields")
+// }
+// createProduct(name,description,price,category,images).then(({data})=>{
+//   if(data.length>0){
+// setTimeout(()=>{
+// navigate("/")
+// },1500)
+//   }
+// })
 
     function showWidget() {
       const widget = window.cloudinary.createUploadWidget(
@@ -35,7 +60,7 @@ export const NewProduct = () => {
     <div>
       <Container>
         <Col md={6} className="new-product_form--container">
-          <Form style={{ width: "100%" }}>
+          <Form style={{ width: "100%" }} onSubmit={()=>handleSubmit}>
             <h1>Create a product</h1>
             {isSuccess && (
               <Alert variant="success">Product created with success</Alert>
@@ -95,7 +120,17 @@ export const NewProduct = () => {
 
             <Form.Group className="mb-3">
               <Button type="button">Upload Images</Button>
-        
+        <div className="images-preview-container">
+          {images.map((image)=>{
+            return(
+              <div key={image.url} className="image-preview">
+                <img src={image.url}/>
+                <FontAwesomeIcon icon={faCircleXmark} />
+                
+              </div>
+            )
+          })}
+        </div>
             </Form.Group>
 
 
