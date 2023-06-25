@@ -59,6 +59,7 @@ function handleRemoveImg(imgObj){
   return (
     <div>
       <Container>
+        <Row>
         <Col md={6} className="new-product_form--container">
           <Form style={{ width: "100%" }} onSubmit={()=>handleSubmit}>
             <h1>Create a product</h1>
@@ -119,13 +120,13 @@ function handleRemoveImg(imgObj){
             </Form.Group>
 
             <Form.Group className="mb-3">
-              <Button type="button">Upload Images</Button>
+              <Button type="button" onClick={showWidget}>Upload Images</Button>
         <div className="images-preview-container">
           {images.map((image)=>{
             return(
               <div key={image.url} className="image-preview">
                 <img src={image.url}/>
-                <FontAwesomeIcon icon={faCircleXmark} />
+                <FontAwesomeIcon icon={faCircleXmark} onClick={()=>handleRemoveImg(image)} />
                 
               </div>
             )
@@ -135,16 +136,15 @@ function handleRemoveImg(imgObj){
 
 
             <Form.Group>
-              <Button type="submit" disabled={isLoading || isSuccess} onClick={showWidget}>
+              <Button type="submit" disabled={isLoading || isSuccess} >
                 Create Product
               </Button>
-              <div className="images-preview-container">
-         
-              </div>
+          
             </Form.Group>
           </Form>
         </Col>
         <Col md={6} className="new-product__image--container"></Col>
+        </Row>
       </Container>
     </div>
   );

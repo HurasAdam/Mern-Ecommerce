@@ -26,3 +26,9 @@ remove-img-spinner{
 .image-preview i:hover{
     color:orange;
 }
+.new-product__image--container{
+background-image: url(https://res.cloudinary.com/dxupb5ce8/image/upload/v1687702448/y4iaqpp7hbgvth7vjl6k.jpg);
+background-size: cover;
+background-position: center;
+height: 100vh;
+}
