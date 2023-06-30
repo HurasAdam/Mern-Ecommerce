@@ -8,7 +8,7 @@ cloudinary.config({
     api_secret:process.env.CLOUD_API_SECRET,
 })
 
-router.delete('/public_id',async(req,res)=>{
+router.delete('/:public_id',async(req,res)=>{
     const {public_id}= req.params;
     try{
 await cloudinary.uploader.destroy(public_id);
