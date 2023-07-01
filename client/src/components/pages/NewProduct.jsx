@@ -21,8 +21,8 @@ export const NewProduct = () => {
   function handleRemoveImg(imgObj) {
     setImgToRemove(imgObj.public_id);
     axios
-      .delete(`/images/${imgObj.public_id}`,{
-        headers:{'Content-Type': 'application/json'}
+      .delete(`/images/${imgObj.public_id}`, {
+        headers: { "Content-Type": "application/json" },
       })
       .then((res) => {
         setImgToRemove(null);
@@ -33,18 +33,24 @@ export const NewProduct = () => {
       .catch((e) => console.log(e));
   }
 
-  // function handleSubmit(e){
-  //   e.preventDefault();
-  //   if(!name||!description||!price||!category||images.length)
-  //   return alert("Pleas fill out all the fields")
-  // }
-  // createProduct(name,description,price,category,images).then(({data})=>{
-  //   if(data.length>0){
-  // setTimeout(()=>{
-  // navigate("/")
-  // },1500)
-  //   }
-  // })
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (!name || !description || !price || !category || !images.length) {
+      return alert("Please fill out all the fields");
+    }
+
+      createProduct({ name, description, price, category, images }).then(({data})=>{
+        if(data.length>0){
+          setTimeout(()=>{
+            navigate("/");
+          },1500)
+        }
+      })
+
+
+  
+
+  }
 
   function showWidget() {
     const widget = window.cloudinary.createUploadWidget(
@@ -69,7 +75,7 @@ export const NewProduct = () => {
       <Container>
         <Row>
           <Col md={6} className="new-product_form--container">
-            <Form style={{ width: "100%" }} onSubmit={() => handleSubmit}>
+            <Form style={{ width: "100%" }}>
               <h1>Create a product</h1>
               {isSuccess && (
                 <Alert variant="success">Product created with success</Alert>
@@ -136,10 +142,12 @@ export const NewProduct = () => {
                     return (
                       <div key={image.url} className="image-preview">
                         <img src={image.url} />
-                        <FontAwesomeIcon
-                          icon={faCircleXmark}
-                          onClick={() => handleRemoveImg(image)}
-                        />
+                        {imgToRemove !== image.public_id ? (
+                          <FontAwesomeIcon
+                            icon={faCircleXmark}
+                            onClick={() => handleRemoveImg(image)}
+                          />
+                        ) : null}
                       </div>
                     );
                   })}
@@ -147,7 +155,7 @@ export const NewProduct = () => {
               </Form.Group>
 
               <Form.Group>
-                <Button type="submit" disabled={isLoading || isSuccess}>
+                <Button type="submit" disabled={isLoading || isSuccess} onClick={handleSubmit}>
                   Create Product
                 </Button>
               </Form.Group>

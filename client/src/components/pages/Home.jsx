@@ -1,11 +1,25 @@
+import axios from "../../axios"
 import { Link } from "react-router-dom";
 import categories from '../../categories/catagories'
 import '../pages/Home.css';
 import { Row, Col } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { updateProducts } from "../../features/productSlice";
+import { ProductPreview } from "../ProductPreview";
 export const Home = () => {
+const dispatch = useDispatch
+const [lastProducts,setPastProdcuts]=useState([])
+// const products = useSelector((state)=>state.products)
+useEffect(()=>{
+
+  axios.get("/products").then(({data})=>setPastProdcuts(data))
+},[])
+
   return (
     <div className="home">
+      
       <img
         src="https://res.cloudinary.com/learn-code-10/image/upload/v1653947013/yqajnhqf7usk56zkwqi5.png"
         alt=""
@@ -14,6 +28,9 @@ export const Home = () => {
       <div className="featured-products-container container mt-4">
         <h2>Latest products</h2>
         {/* LAST PRODUCTS HERE */}
+    {lastProducts.map((product)=>{
+      return(<div key={product.name}>{product.name}</div>)
+    })}
         <div>
           <Link
             to="/category/all"

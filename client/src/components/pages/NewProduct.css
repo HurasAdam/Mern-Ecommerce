@@ -27,7 +27,7 @@ remove-img-spinner{
     color:orange;
 }
 .new-product__image--container{
-background-image: url(https://res.cloudinary.com/dxupb5ce8/image/upload/v1687702448/y4iaqpp7hbgvth7vjl6k.jpg);
+background-image:url("../../Assets/Images/create-product-background.jpg");
 background-size: cover;
 background-position: center;
 height: 100vh;
