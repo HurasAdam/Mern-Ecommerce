@@ -9,12 +9,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateProducts } from "../../features/productSlice";
 import { ProductPreview } from "../ProductPreview";
 export const Home = () => {
-const dispatch = useDispatch
-const [lastProducts,setPastProdcuts]=useState([])
-// const products = useSelector((state)=>state.products)
+const dispatch = useDispatch()
+
+const products = useSelector((state)=>state.products)
+
 useEffect(()=>{
 
-  axios.get("/products").then(({data})=>setPastProdcuts(data))
+  axios.get("/products").then(({data})=>dispatch(updateProducts(data)))
 },[])
 
   return (
@@ -28,9 +29,11 @@ useEffect(()=>{
       <div className="featured-products-container container mt-4">
         <h2>Latest products</h2>
         {/* LAST PRODUCTS HERE */}
-    {lastProducts.map((product)=>{
-      return(<div key={product.name}>{product.name}</div>)
-    })}
+ {products.map((product)=>{
+  return(
+    <ProductPreview {...product}/>
+  )
+ })}
         <div>
           <Link
             to="/category/all"
