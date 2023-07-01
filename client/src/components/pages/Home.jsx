@@ -29,7 +29,7 @@ useEffect(()=>{
       <div className="featured-products-container container mt-4">
         <h2>Latest products</h2>
         {/* LAST PRODUCTS HERE */}
-        <diva className="d-flex justify-content-center flex-wrap>
+        <div className="d-flex justify-content-center flex-wrap">
  {products.map((product)=>{
   return(
     <ProductPreview {...product}/>
