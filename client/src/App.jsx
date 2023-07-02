@@ -8,6 +8,7 @@ import { Signup } from "./components/pages/Signup";
 import { useSelector } from "react-redux";
 import { NewProduct } from "./components/pages/NewProduct";
 import { ProductPage } from "./components/pages/ProductPage";
+import CategoryPage from "./components/pages/CategoryPage";
 function App() {
   const user = useSelector((state) => state.user);
   return (
@@ -24,6 +25,7 @@ function App() {
             </>
           )}
            <Route  exact path="/product/:id" element={<ProductPage/>} />
+           <Route  exact path="/category/:category" element={<CategoryPage/>} />
           <Route  exact path="/new-product" element={<NewProduct/>} />
           <Route path="*" element={<Home />} />
         </Routes>
