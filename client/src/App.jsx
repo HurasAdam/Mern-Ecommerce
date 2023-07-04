@@ -10,6 +10,7 @@ import { NewProduct } from "./components/pages/NewProduct";
 import { ProductPage } from "./components/pages/ProductPage";
 import CategoryPage from "./components/pages/CategoryPage";
 import ScrollToTop from "./components/ScrollToTop";
+import CartPage from "./components/pages/CartPage";
 function App() {
   const user = useSelector((state) => state.user);
   return (
@@ -24,6 +25,11 @@ function App() {
             <>
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
+            </>
+          )}
+          {user&&(
+            <>
+            <Route path="/cart/" element={<CartPage/>}/>
             </>
           )}
            <Route  exact path="/product/:id" element={<ProductPage/>} />
