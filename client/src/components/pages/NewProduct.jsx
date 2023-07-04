@@ -126,10 +126,10 @@ export const NewProduct = () => {
                     {" "}
                     -- Select One --
                   </option>
-                  <option value="Technology">Technology</option>
-                  <option value="Tablets">Tablets</option>
-                  <option value="Phones">Phones</option>
-                  <option value="Laptops">Laptops</option>
+                  <option value="technology">Technology</option>
+                  <option value="tablets">Tablets</option>
+                  <option value="phones">Phones</option>
+                  <option value="laptops">Laptops</option>
                 </Form.Select>
               </Form.Group>
 

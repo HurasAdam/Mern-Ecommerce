@@ -50,15 +50,15 @@ export function ProductPage() {
       onDragStart={handleDragStart}
     />
   ));
-  //   let similarProducts = [];
-  //   if (similar) {
-  //     similarProducts = similar.map(({product, idx}) => {
-  //       return <div key={idx} className="item" data-value={idx}>
-  // <SimilarProduct {...product}/>
+    let similarProducts = [];
+    if (similar) {
+      similarProducts = similar.map(({product, idx}) => {
+        return <div key={idx} className="item" data-value={idx}>
+  <SimilarProduct {...product}/>
 
-  //       </div>;
-  //     });
-  //   }
+        </div>;
+      });
+    }
   return (
     <Container className="pt-4" style={{ position: "relative" }}>
       <Row>

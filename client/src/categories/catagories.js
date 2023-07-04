@@ -6,7 +6,7 @@
         
     },
     {
-        name:"Phone",
+        name:"Phones",
         img:'https://source.unsplash.com/Wzs4-QEmCUQ'
     },
     {
