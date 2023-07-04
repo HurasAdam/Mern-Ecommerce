@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
+import "../pages/CategoryPage.css"
 import Loading from "../Loading";
 import axios from "../../axios"
 import { useParams } from "react-router-dom";
@@ -39,7 +40,10 @@ const productsSearch = products.filter((product) =>
 ):(<Container>
     <Row>
         <Col md={{span:10, offset:1}}>
+            <div className="d-flex justify-content-center align-items-center flex-wrap">
             {productsSearch.map((product)=><ProductPreview {...product} key={product.name}/>)}
+            </div>
+     
         </Col>
     </Row>
 </Container>)}

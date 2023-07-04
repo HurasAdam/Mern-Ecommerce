@@ -9,11 +9,13 @@ import { useSelector } from "react-redux";
 import { NewProduct } from "./components/pages/NewProduct";
 import { ProductPage } from "./components/pages/ProductPage";
 import CategoryPage from "./components/pages/CategoryPage";
+import ScrollToTop from "./components/ScrollToTop";
 function App() {
   const user = useSelector((state) => state.user);
   return (
     <div className="App">
       <BrowserRouter>
+      <ScrollToTop/>
         <Navigation />
         <Routes>
           <Route index element={<Home />} />
