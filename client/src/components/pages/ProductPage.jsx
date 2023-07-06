@@ -17,11 +17,14 @@ import axios from "../../axios";
 import { SimilarProduct } from "../SimilarProduct";
 import "../pages/ProductPage.css";
 import { LinkContainer } from "react-router-bootstrap";
+import { useAddToCartMutation } from "../../services/appApi";
+import ToastMessage from "../ToastMessage";
 export function ProductPage() {
   const { id } = useParams();
   const user = useSelector((state) => state.user);
   const [product, setProduct] = useState(null);
   const [similar, setSimilar] = useState(null);
+  const [addToCart,{isSuccess}]=useAddToCartMutation()
   function handleDragStart(e) {
     e.preventDefault();
   }
@@ -92,7 +95,7 @@ export function ProductPage() {
                 <option value="4">4</option>
                 <option value="5">5</option>
               </Form.Select>
-              <Button size="lg">Add to cart</Button>
+              <Button size="lg" onClick={(e)=>addToCart({userId:user._id,productId:id,price:product.price,image:product.pictures[0].url})}>Add to cart</Button>
             </ButtonGroup>
           )}
           {user && user.isAdmin && (
@@ -100,6 +103,7 @@ export function ProductPage() {
               <Button size="lg">Edit Product</Button>
             </LinkContainer>
           )}
+          {isSuccess&& <ToastMessage item={product.name} bg="info" title="Added to cart" body={`${product.name} is in you cart`}/>}
         </Col>
       </Row>
       <div className="my-4">
