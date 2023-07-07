@@ -1,0 +1,16 @@
+.cart-action-icon{
+    cursor: pointer;
+    display: inline-block;
+    
+}
+.cart-action-icon.plus{
+margin-left:5px;
+}
+.cart-action-icon.plus{
+    margin-right:5px;
+    }
+
+.table-responsive-sm{
+    max-height: 70vh;
+    overflow: scroll;
+}
