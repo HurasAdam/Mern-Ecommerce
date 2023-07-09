@@ -13,13 +13,17 @@ function CartPage() {
   let cart = products.filter((product) => userCartObj[product._id] != null);
   const [increaseCart]=useIncreaseCartProductMutation();
   const [decreaseCart]=useDecreaseCartProductMutation();
-  const [removeFromCart]=useRemoveFromCartMutation();
+  const [removeFromCart,{isLoading}]=useRemoveFromCartMutation();
 
 
-  function handleDecrease(e,product){
+  function handleDecrease(product){
     const quantity = user.cart.count;
-    if(quantity<=0) return alert("Cant proceed")
-decreaseCart(product)
+    if(quantity<=0){
+      return alert("Cant proceed")
+    }
+else{
+  decreaseCart(product)
+}
   }
   return (
     <Container style={{ minHeight: "95vh" }} className="cart-container">
@@ -51,18 +55,18 @@ decreaseCart(product)
                   {/* LOOP thru cart products */}
                   {cart.map((item) => {
                     return (
-                      <tr>
+                      <tr key={item._id}>
                         <td>&nbsp;</td>
                         <td>
-                          <FontAwesomeIcon className="cart-action-icon remove" icon={faXmark} style={{marginRight:10}}  />
+                          {!isLoading&&<FontAwesomeIcon className="cart-action-icon remove" icon={faXmark} style={{marginRight:10}} onClick={()=>removeFromCart({productId:item._id,price:item.price,userId:user._id})}  />}
                           <img src={item.pictures[0].url} style={{width:100, height:100,objectFit:"cover"}} alt="" />
                         </td>
                         <td>{item.price}</td>
                         <td>
                           <span className="quantity-indicator">
-                          <FontAwesomeIcon className="cart-action-icon plus"  icon={faCircleMinus} size="lg" style={{color: "#27282b",}} onClick={()=>increaseCart({productId:item._id,price:item.price,userId:user._id})}/>
+                          <FontAwesomeIcon className="cart-action-icon plus"  icon={faCircleMinus} size="lg" style={{color: "#27282b",}} onClick={()=>handleDecrease({productId:item._id,price:item.price,userId:user._id})}/>
                           <span>{user.cart[item._id]}</span>
-                          <FontAwesomeIcon className="cart-action-icon minus"  icon={faCirclePlus} size="lg" style={{color: "#27282b",}} onClick={(e)=>decreaseCart({productId:item._id,price:item.price,userId:user._id})} />
+                          <FontAwesomeIcon className="cart-action-icon minus"  icon={faCirclePlus} size="lg" style={{color: "#27282b",}} onClick={(e)=>increaseCart({productId:item._id,price:item.price,userId:user._id})} />
                           </span>
                         </td>
                         <td>{item.price * user.cart[item._id]}</td>
