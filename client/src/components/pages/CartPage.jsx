@@ -5,25 +5,28 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faCircleMinus } from "@fortawesome/free-solid-svg-icons";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
-import { useIncreaseCartProductMutation,useDecreaseCartProductMutation,useRemoveFromCartMutation } from "../../services/appApi";
+import {
+  useIncreaseCartProductMutation,
+  useDecreaseCartProductMutation,
+  useRemoveFromCartMutation,
+} from "../../services/appApi";
 function CartPage() {
   const user = useSelector((state) => state.user);
   const products = useSelector((state) => state.products);
   const userCartObj = user.cart;
+
   let cart = products.filter((product) => userCartObj[product._id] != null);
-  const [increaseCart]=useIncreaseCartProductMutation();
-  const [decreaseCart]=useDecreaseCartProductMutation();
-  const [removeFromCart,{isLoading}]=useRemoveFromCartMutation();
+  const [increaseCart] = useIncreaseCartProductMutation();
+  const [decreaseCart] = useDecreaseCartProductMutation();
+  const [removeFromCart, { isLoading }] = useRemoveFromCartMutation();
 
-
-  function handleDecrease(product){
+  function handleDecrease(product) {
     const quantity = user.cart.count;
-    if(quantity<=0){
-      return alert("Cant proceed")
+    if (quantity <= 0) {
+      return alert("Cant proceed");
+    } else {
+      decreaseCart(product);
     }
-else{
-  decreaseCart(product)
-}
   }
   return (
     <Container style={{ minHeight: "95vh" }} className="cart-container">
@@ -58,15 +61,60 @@ else{
                       <tr key={item._id}>
                         <td>&nbsp;</td>
                         <td>
-                          {!isLoading&&<FontAwesomeIcon className="cart-action-icon remove" icon={faXmark} style={{marginRight:10}} onClick={()=>removeFromCart({productId:item._id,price:item.price,userId:user._id})}  />}
-                          <img src={item.pictures[0].url} style={{width:100, height:100,objectFit:"cover"}} alt="" />
+                          {!isLoading && (
+                            <FontAwesomeIcon
+                              className="cart-action-icon remove"
+                              icon={faXmark}
+                              style={{ marginRight: 10 }}
+                              onClick={() =>
+                                removeFromCart({
+                                  productId: item._id,
+                                  price: item.price,
+                                  userId: user._id,
+                                })
+                              }
+                            />
+                          )}
+                          <img
+                            src={item.pictures[0].url}
+                            style={{
+                              width: 100,
+                              height: 100,
+                              objectFit: "cover",
+                            }}
+                            alt=""
+                          />
                         </td>
                         <td>{item.price}</td>
                         <td>
                           <span className="quantity-indicator">
-                          <FontAwesomeIcon className="cart-action-icon plus"  icon={faCircleMinus} size="lg" style={{color: "#27282b",}} onClick={()=>handleDecrease({productId:item._id,price:item.price,userId:user._id})}/>
-                          <span>{user.cart[item._id]}</span>
-                          <FontAwesomeIcon className="cart-action-icon minus"  icon={faCirclePlus} size="lg" style={{color: "#27282b",}} onClick={(e)=>increaseCart({productId:item._id,price:item.price,userId:user._id})} />
+                            <FontAwesomeIcon
+                              className="cart-action-icon plus"
+                              icon={faCircleMinus}
+                              size="lg"
+                              style={{ color: "#27282b" }}
+                              onClick={() =>
+                                handleDecrease({
+                                  productId: item._id,
+                                  price: item.price,
+                                  userId: user._id,
+                                })
+                              }
+                            />
+                            <span>{user.cart[item._id]}</span>
+                            <FontAwesomeIcon
+                              className="cart-action-icon minus"
+                              icon={faCirclePlus}
+                              size="lg"
+                              style={{ color: "#27282b" }}
+                              onClick={(e) =>
+                                increaseCart({
+                                  productId: item._id,
+                                  price: item.price,
+                                  userId: user._id,
+                                })
+                              }
+                            />
                           </span>
                         </td>
                         <td>{item.price * user.cart[item._id]}</td>
