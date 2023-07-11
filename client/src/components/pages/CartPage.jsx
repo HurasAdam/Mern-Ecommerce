@@ -18,10 +18,10 @@ function CartPage() {
 
   let cart = products.filter((product) => userCartObj?.[product._id] != null);
   const [increaseCart] = useIncreaseCartProductMutation();
-  const [decreaseCart, { data, isError, error }] =
+  const [decreaseCart, { data, isError,  error: { data: errorMessage } = {} }] =
     useDecreaseCartProductMutation();
   const [removeFromCart, { isLoading }] = useRemoveFromCartMutation();
-  console.log(error && error.data);
+
   function handleDecrease(product) {
     decreaseCart(product);
   }
@@ -85,9 +85,9 @@ function CartPage() {
                         <td>{item.price}</td>
                         <td>
                           <span className="quantity-indicator">
-                            {/* {user&&user.cart[item._id]>1?(<FontAwesomeIcon */}
-                            <FontAwesomeIcon
-                              className="cart-action-icon minus"
+                       <FontAwesomeIcon
+                         
+                              className={`${user&&user.cart[item._id]<=1?"cart-action-icon minus-disabled":"cart-action-icon minus"}`}
                               icon={faCircleMinus}
                               size="lg"
                               style={{ color: "#27282b" }}
@@ -130,7 +130,7 @@ function CartPage() {
             <ToastMessage
               item={"asdas"}
               bg="warning"
-              title={error&&error?.data.message}
+              title={isError && errorMessage && errorMessage.data}
               position={"top"}
             />
           )}

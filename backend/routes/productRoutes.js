@@ -63,7 +63,7 @@ router.delete("/:id", async (req, res) => {
     const products = await Product.find();
     res.status(200).json(products);
   } catch (e) {
-    res.status(400).json(e.message);
+    res.status(400).send(e.message)
   }
 });
 
