@@ -142,7 +142,7 @@ router.post('/decrease-cart', async(req, res)=> {
     const user = await User.findById(userId);
     const userCart = user.cart;
 
-    if (userCart[productId] <= 0) {
+    if (userCart[productId] <= 1) {
       throw new Error("The quantity cannot be less than 1");
     }
 
@@ -154,7 +154,7 @@ router.post('/decrease-cart', async(req, res)=> {
     await user.save();
     res.status(200).json(user);
   } catch (e) {
-    res.status(400).send(e.message);
+    res.status(400).send({data:[e.message]});
   }
   
 })

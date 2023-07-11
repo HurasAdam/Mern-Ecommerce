@@ -3,11 +3,11 @@ import { ToastContainer,Toast } from "react-bootstrap";
 import "./ToastMessage.css"
 
 
-function ToastMessage({bg,title,body}){
+function ToastMessage({bg,title,body,position}){
     const [show,setShow]=useState(true);
   return (
-<ToastContainer position="bottom-right " className="toast-container">
-<Toast bg={bg} onClose={()=>setShow(false)} show={show} delay={2000} autohide>
+<ToastContainer position="bottom-right " className={`toast-container-${position}`}>
+<Toast bg={bg} onClose={()=>setShow(false)} show={show} delay={2000000} autohide>
     <Toast.Header>
         <strong className="me-auto">{title}</strong>
         <small>now</small>

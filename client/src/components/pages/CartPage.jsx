@@ -10,23 +10,20 @@ import {
   useDecreaseCartProductMutation,
   useRemoveFromCartMutation,
 } from "../../services/appApi";
+import ToastMessage from "../ToastMessage";
 function CartPage() {
   const user = useSelector((state) => state.user);
   const products = useSelector((state) => state.products);
-  const userCartObj = user.cart;
+  const userCartObj = user?.cart;
 
-  let cart = products.filter((product) => userCartObj[product._id] != null);
+  let cart = products.filter((product) => userCartObj?.[product._id] != null);
   const [increaseCart] = useIncreaseCartProductMutation();
-  const [decreaseCart] = useDecreaseCartProductMutation();
+  const [decreaseCart, { data, isError, error }] =
+    useDecreaseCartProductMutation();
   const [removeFromCart, { isLoading }] = useRemoveFromCartMutation();
-
+  console.log(error && error.data);
   function handleDecrease(product) {
-    const quantity = user.cart.count;
-    if (quantity <= 0) {
-      return alert("Cant proceed");
-    } else {
-      decreaseCart(product);
-    }
+    decreaseCart(product);
   }
   return (
     <Container style={{ minHeight: "95vh" }} className="cart-container">
@@ -88,8 +85,9 @@ function CartPage() {
                         <td>{item.price}</td>
                         <td>
                           <span className="quantity-indicator">
+                            {/* {user&&user.cart[item._id]>1?(<FontAwesomeIcon */}
                             <FontAwesomeIcon
-                              className="cart-action-icon plus"
+                              className="cart-action-icon minus"
                               icon={faCircleMinus}
                               size="lg"
                               style={{ color: "#27282b" }}
@@ -103,7 +101,7 @@ function CartPage() {
                             />
                             <span>{user.cart[item._id]}</span>
                             <FontAwesomeIcon
-                              className="cart-action-icon minus"
+                              className="cart-action-icon plus"
                               icon={faCirclePlus}
                               size="lg"
                               style={{ color: "#27282b" }}
@@ -127,6 +125,14 @@ function CartPage() {
                 <h3 className="h4 pt-4">Total:${user.cart.total}</h3>
               </div>
             </>
+          )}
+          {isError && (
+            <ToastMessage
+              item={"asdas"}
+              bg="warning"
+              title={error&&error?.data.message}
+              position={"top"}
+            />
           )}
         </Col>
       </Row>

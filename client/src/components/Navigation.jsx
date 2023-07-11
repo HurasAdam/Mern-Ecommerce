@@ -35,7 +35,7 @@ export const Navigation = () => {
                 <FontAwesomeIcon
                   icon={faCartShopping}
                 />
-                  {user?.cart.count > 0 && (
+                  {user?.cart?.count > 0 && (
                     <span className="badge badge-warning" id="cartcount">
                       {user.cart.count}
                     </span>

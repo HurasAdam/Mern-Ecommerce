@@ -103,7 +103,7 @@ export function ProductPage() {
               <Button size="lg">Edit Product</Button>
             </LinkContainer>
           )}
-          {isSuccess&& <ToastMessage item={product.name} bg="info" title="Added to cart" body={`${product.name} is in you cart`}/>}
+          {isSuccess&& <ToastMessage item={product.name} bg="info" title="Added to cart" body={`${product.name} is in you cart`} position={"top"}/>}
         </Col>
       </Row>
       <div className="my-4">
