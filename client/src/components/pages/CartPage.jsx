@@ -5,12 +5,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faCircleMinus } from "@fortawesome/free-solid-svg-icons";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
+import {Elements} from "@stripe/react-stripe-js"
+import {loadStripe} from "@stripe/stripe-js";
 import {
   useIncreaseCartProductMutation,
   useDecreaseCartProductMutation,
   useRemoveFromCartMutation,
 } from "../../services/appApi";
 import ToastMessage from "../ToastMessage";
+import CheckoutForm from "../CheckoutForm";
+import { useState } from "react";
+
+
+const stripePromise=loadStripe('pk_test_51NSqHFIDv0ykXsLaoExVYpdcdAG56RGgHnkJmVyTkztUs6nMSvjQFfsIXXgB9HowTwdV6wNnA5PGwbqE1GfJLhf300oIBVQfjb')
+
 function CartPage() {
   const user = useSelector((state) => state.user);
   const products = useSelector((state) => state.products);
@@ -22,9 +30,12 @@ function CartPage() {
     useDecreaseCartProductMutation();
   const [removeFromCart, { isLoading }] = useRemoveFromCartMutation();
 
+
   function handleDecrease(product) {
     decreaseCart(product);
   }
+
+
   return (
     <Container style={{ minHeight: "95vh" }} className="cart-container">
       <Row>
@@ -35,7 +46,9 @@ function CartPage() {
               Shopping cart is empty. Add products to your cart
             </Alert>
           ) : (
-            <div>Payment here</div>
+            <Elements stripe={stripePromise}>
+              <CheckoutForm/>
+            </Elements>
           )}
         </Col>
         <Col md={5}>
