@@ -1,34 +1,46 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-const http= require('http');
-const cors = require('cors')
+const http = require("http");
+require("dotenv").config();
+const stripe = require("stripe")(process.env.STRIPE_SECRET);
+const cors = require("cors");
 const server = http.createServer(app);
-const {Server}=require('socket.io');
-require('dotenv').config();
-const io = new Server(server,{
-    cors:'*',
-    method:'*'
-})
+const { Server } = require("socket.io");
 
-const User= require('./models/User');
-const { default: mongoose } = require('mongoose');
-const userRoutes=require('./routes/userRoutes')
-const productRoutes= require('./routes/productRoutes')
-const imageRoutes = require('./routes/imagesRoutes')
+const io = new Server(server, {
+  cors: "*",
+  method: "*",
+});
+
+const User = require("./models/User");
+const { default: mongoose } = require("mongoose");
+const userRoutes = require("./routes/userRoutes");
+const productRoutes = require("./routes/productRoutes");
+const imageRoutes = require("./routes/imagesRoutes");
 
 app.use(cors());
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use('/users',userRoutes)
-app.use('/products',productRoutes)
-app.use('/images',imageRoutes)
+app.use("/users", userRoutes);
+app.use("/products", productRoutes);
+app.use("/images", imageRoutes);
 
+app.post("/create-payment", async (req, res) => {
+  const { amout } = req.body;
+  try {
+    const paymentIntent = await stripe.paymentIntents.crete({
+      amount,
+      currenty: "usd",
+      payment_method_types: ["card"],
+    });
+    res.status(200).json(paymentIntent);
+  } catch (e) {
+    res.status(400).json(e.message);
+  }
+});
 
-mongoose.connect(process.env.MONGO_URI)
-.then(()=>{
-    server.listen(process.env.PORT,()=>{
-        console.log(`DB Connected : Server running on port${process.env.PORT}`)
-})
-
-
-})
+mongoose.connect(process.env.MONGO_URI).then(() => {
+  server.listen(process.env.PORT, () => {
+    console.log(`DB Connected : Server running on port${process.env.PORT}`);
+  });
+});

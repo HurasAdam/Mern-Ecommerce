@@ -16,7 +16,8 @@ const [country,setCountry]=useState("");
 const [adress,setAdress]=useState("");
 const [paying,setPaying]=useState(false);
 async function handlePay(e){
-if(!stripe||!elements||!user.cart.count<=0){
+    e.preventDefault();
+if(!stripe||!elements||user.cart.count<=0){
     return 
 }
 else{
@@ -40,7 +41,7 @@ else{
             if(!isLoading&&!isError){
                 setAlertMessage(`Payment ${paymentIntent.status}`);
                 setTimeout(()=>{
-navigate('/orders')
+// navigate('/orders')
                 },2000)
             }
         })
