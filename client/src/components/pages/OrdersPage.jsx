@@ -3,6 +3,7 @@ import "../pages/OrdersPage.css";
 import { useEffect, useState } from "react";
 import axios from "../../axios";
 import { Container, Table } from "react-bootstrap";
+import Loading from "../Loading";
 function OrdersPage() {
   const user = useSelector((state) => state.user);
   const products = useSelector((state) => state.producst);
@@ -24,6 +25,14 @@ function OrdersPage() {
         console.log(e);
       });
   }, []);
+
+
+if(loading){
+    return <Loading/>
+}
+if(orders.length===0){
+    return <h1 className="text-center pt-3">No orders yet</h1>
+}
 
   return (
     <Container>
