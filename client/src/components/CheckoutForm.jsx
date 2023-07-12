@@ -15,19 +15,20 @@ const [createOrder,{isLoading,isError}]=useCreateOrderMutation();
 const [country,setCountry]=useState("");
 const [adress,setAdress]=useState("");
 const [paying,setPaying]=useState(false);
+
 async function handlePay(e){
     e.preventDefault();
 if(!stripe||!elements||user.cart.count<=0){
-    return 
+    return console.log('All field need to be filled')
 }
 else{
     setPaying(true);
-    const {client_secret}=await fetch("http://localhost:8000/create-payment",{
+    const {client_secret}=await fetch("http://127.0.0.1:4001/create-payment",{
         method:"POST",
         headers:{
             "Content-Type":"application/json"
         },
-        body:JSON.stringify({amount:user.cart.total}),
+        body:JSON.stringify({amount:user?.cart?.total}),
     }).then((res)=>res.json());
     const {paymentIntent}=await stripe.confirmCardPayment(client_secret,{
         payment_method:{
