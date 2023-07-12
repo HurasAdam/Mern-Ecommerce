@@ -11,7 +11,7 @@ const elements=useElements()
 const user=useSelector(state=>state.user)
 const navigate = useNavigate();
 const [alertMessage,setAlertMessage]=useState("");
-const [createOrder,{isLoading,isError}]=useCreateOrderMutation();
+const [createOrder,{isLoading,isError,isSuccess}]=useCreateOrderMutation();
 const [country,setCountry]=useState("");
 const [adress,setAdress]=useState("");
 const [paying,setPaying]=useState(false);
@@ -42,7 +42,7 @@ else{
             if(!isLoading&&!isError){
                 setAlertMessage(`Payment ${paymentIntent.status}`);
                 setTimeout(()=>{
-// navigate('/orders')
+navigate('/orders')
                 },2000)
             }
         })
@@ -74,19 +74,19 @@ else{
     <Col md={7}>
         <Form.Group className="mb-3">
             <Form.Label>Adress</Form.Label>
-            <Form.Control type="text" placeholder="Adress" value={adress} onChange={(e)=>setAdress(e.target.value)}/>
+            <Form.Control type="text" placeholder="Adress" value={adress} required onChange={(e)=>setAdress(e.target.value)}/>
         </Form.Group>
     </Col>
     <Col md={5}>
         <Form.Group className="mb-3">
             <Form.Label>Country</Form.Label>
-            <Form.Control type="text" placeholder="Country" value={country} onChange={(e)=>setCountry(e.target.value)}/>
+            <Form.Control type="text" placeholder="Country" value={country} required onChange={(e)=>setCountry(e.target.value)}/>
         </Form.Group>
     </Col>
     </Row>
     <label htmlFor="card-element">Cart</label>
     <CardElement id="card-element"/>
-    <Button className="mt-3" type="submit" disabled={user.cart.count<=0||paying}>{paying?"Processing...":"Pay"}</Button>
+    <Button className="mt-3" type="submit" disabled={user.cart.count<=0||paying}>{paying?"Processing...":"Pay"||isSuccess}</Button>
     </Form>
    </Col>
   )
