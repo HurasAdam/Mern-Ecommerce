@@ -43,7 +43,7 @@ else{
                 setAlertMessage(`Payment ${paymentIntent.status}`);
                 setTimeout(()=>{
 navigate('/orders')
-                },2000)
+                },1800)
             }
         })
     }

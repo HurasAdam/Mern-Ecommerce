@@ -12,6 +12,7 @@ import CategoryPage from "./components/pages/CategoryPage";
 import ScrollToTop from "./components/ScrollToTop";
 import CartPage from "./components/pages/CartPage";
 import OrdersPage from "./components/pages/OrdersPage";
+import AdminDashboard from "./components/AdminDashboard";
 function App() {
   const user = useSelector((state) => state.user);
   return (
@@ -32,6 +33,11 @@ function App() {
             <>
             <Route path="/cart/" element={<CartPage/>}/>
             <Route path="/orders/" element={<OrdersPage/>}/>
+            </>
+          )}
+          {user&&user.isAdmin&&(
+            <>
+            <Route path="admin" element={<AdminDashboard/>}/>
             </>
           )}
            <Route  exact path="/product/:id" element={<ProductPage/>} />

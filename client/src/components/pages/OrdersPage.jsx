@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import "../pages/OrdersPage.css";
 import { useEffect, useState } from "react";
 import axios from "../../axios";
-import { Container, Table,Badge } from "react-bootstrap";
+import { Container, Table, Badge } from "react-bootstrap";
 import Loading from "../Loading";
 function OrdersPage() {
   const user = useSelector((state) => state.user);
@@ -26,13 +26,12 @@ function OrdersPage() {
       });
   }, []);
 
-
-if(loading){
-    return <Loading/>
-}
-if(orders.length===0){
-    return <h1 className="text-center pt-3">No orders yet</h1>
-}
+  if (loading) {
+    return <Loading />;
+  }
+  if (orders.length === 0) {
+    return <h1 className="text-center pt-3">No orders yet</h1>;
+  }
 
   return (
     <Container>
@@ -42,8 +41,9 @@ if(orders.length===0){
           <tr>
             <th>#</th>
             <th>Status</th>
+            <th>Date</th>
             <th>Total</th>
-            <th>&nbsp;</th>
+
           </tr>
         </thead>
         <tbody>
@@ -53,14 +53,14 @@ if(orders.length===0){
                 <td>{order._id}</td>
                 <td>
                   <Badge
-                    bg={`${order.status === "processing"}?"warning":"success"`}
+                    bg={`${order.status === "processing"?"warning":"success"}`}
                     text="white"
                   >
                     {order.status}
                   </Badge>
                 </td>
+                <td>{order.date}</td>
                 <td>${order.total}</td>
-                <td>{order._id}</td>
               </tr>
             );
           })}
