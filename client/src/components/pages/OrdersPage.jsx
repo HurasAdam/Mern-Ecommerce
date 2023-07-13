@@ -2,11 +2,11 @@ import { useSelector } from "react-redux";
 import "../pages/OrdersPage.css";
 import { useEffect, useState } from "react";
 import axios from "../../axios";
-import { Container, Table } from "react-bootstrap";
+import { Container, Table,Badge } from "react-bootstrap";
 import Loading from "../Loading";
 function OrdersPage() {
   const user = useSelector((state) => state.user);
-  const products = useSelector((state) => state.producst);
+
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
   const [orderToShow, setOrderToShow] = useState([]);
