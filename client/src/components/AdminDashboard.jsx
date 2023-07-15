@@ -1,14 +1,15 @@
 import axios from "../axios";
 import { Container, Tab, Row, Col, Nav } from "react-bootstrap";
 import "./AdminDashboard.css";
+import DashboardProducts from "./DashboardProducts";
 
 function AdminDashboard() {
   return (
     <Container>
-      <Tab.Container>
+      <Tab.Container defaultActiveKey="products">
         <Row>
-          <Col md={3}>
-            <Nav variant="pills" className="flex-columns">
+          <Col sm={3}>
+            <Nav variant="pills" className="flex-column">
               <Nav.Item>
                 <Nav.Link eventKey="products">Products</Nav.Link>
               </Nav.Item>
@@ -20,8 +21,10 @@ function AdminDashboard() {
               </Nav.Item>
             </Nav>
           </Col>
-          <Col md={9}>
-            <Tab.Content>Hello</Tab.Content>
+          <Col sm={9}>
+            <Tab.Content eventKey="products">
+<DashboardProducts/>
+            </Tab.Content>
           </Col>
         </Row>
       </Tab.Container>
