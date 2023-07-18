@@ -8,7 +8,7 @@ import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import axios from "../../axios";
 
 export const EditProductPage = () => {
-    const {id}= useParams();
+  const { id } = useParams();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
@@ -19,17 +19,19 @@ export const EditProductPage = () => {
   const [updateProduct, { isError, error, isLoading, isSuccess }] =
     useUpdateProductMutation();
 
-useEffect(()=>{
-axios.get('/products/'+id).then(({data})=>{
-    const product = data.product
-    setName(product.name);
-    setDescription(product.description);
-    setCategory(product.category);
-    setImages(product.pictures);
-    setPrice(product.price);
-})
-.catch((e)=>console.log(e));
-},[id])
+  useEffect(() => {
+    axios
+      .get("/products/" + id)
+      .then(({ data }) => {
+        const product = data.product;
+        setName(product.name);
+        setDescription(product.description);
+        setCategory(product.category);
+        setImages(product.pictures);
+        setPrice(product.price);
+      })
+      .catch((e) => console.log(e));
+  }, [id]);
 
   function handleRemoveImg(imgObj) {
     setImgToRemove(imgObj.public_id);
@@ -52,17 +54,15 @@ axios.get('/products/'+id).then(({data})=>{
       return alert("Please fill out all the fields");
     }
 
-      updateProduct({id, name, description, price, category, images }).then(({data})=>{
-        if(data.length>0){
-          setTimeout(()=>{
+    updateProduct({ id, name, description, price, category, images }).then(
+      ({ data }) => {
+        if (data.length > 0) {
+          setTimeout(() => {
             navigate("/");
-          },1500)
+          }, 1500);
         }
-      })
-
-
-  
-
+      }
+    );
   }
 
   function showWidget() {
@@ -90,9 +90,7 @@ axios.get('/products/'+id).then(({data})=>{
           <Col md={6} className="new-product_form--container">
             <Form style={{ width: "100%" }}>
               <h1>Edit product</h1>
-              {isSuccess && (
-                <Alert variant="success">Product updated</Alert>
-              )}
+              {isSuccess && <Alert variant="success">Product updated</Alert>}
               {isError && <Alert variant="danger">{error.data}</Alert>}
               <Form.Group className="mb-3">
                 <Form.Label>Product name</Form.Label>
@@ -134,7 +132,7 @@ axios.get('/products/'+id).then(({data})=>{
                 onChange={(e) => setCategory(e.target.value)}
               >
                 <Form.Label>Category</Form.Label>
-                <Form.Select>
+                <Form.Select value={category}>
                   <option disabled selected>
                     {" "}
                     -- Select One --
@@ -168,8 +166,12 @@ axios.get('/products/'+id).then(({data})=>{
               </Form.Group>
 
               <Form.Group>
-                <Button type="submit" disabled={isLoading || isSuccess} onClick={handleSubmit}>
-                  Create Product
+                <Button
+                  type="submit"
+                  disabled={isLoading || isSuccess}
+                  onClick={handleSubmit}
+                >
+                 Update Product
                 </Button>
               </Form.Group>
             </Form>

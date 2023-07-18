@@ -2,7 +2,7 @@ import axios from "../axios";
 import { Container, Tab, Row, Col, Nav } from "react-bootstrap";
 import "./AdminDashboard.css";
 import DashboardProducts from "./DashboardProducts";
-
+import OrdersAdminPage from './OrdersAdminPage';
 function AdminDashboard() {
   return (
     <Container>
@@ -22,9 +22,12 @@ function AdminDashboard() {
             </Nav>
           </Col>
           <Col sm={9}>
-            <Tab.Content eventKey="products">
+            <Tab.Pane eventKey="products">
 <DashboardProducts/>
-            </Tab.Content>
+            </Tab.Pane>
+            <Tab.Pane eventKey="orders">
+<OrdersAdminPage/>
+            </Tab.Pane>
           </Col>
         </Row>
       </Tab.Container>
