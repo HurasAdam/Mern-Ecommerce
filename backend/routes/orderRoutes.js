@@ -9,13 +9,13 @@ router.post("/", async (req, res) => {
   const { userId, cart, country, adress } = req.body;
 
   try {
-    const user = await User.findOne({ _id:userId });
-    if(!userId){
-      throw new Error('Missing userId in request body')
+    const user = await User.findOne({ _id: userId });
+    if (!userId) {
+      throw new Error("Missing userId in request body");
     }
-if(!user){
-  throw new Error('User not found!')
-}
+    if (!user) {
+      throw new Error("User not found!");
+    }
     const order = await Order.create({
       owner: user._id,
       products: cart,
@@ -35,16 +35,16 @@ if(!user){
   }
 });
 
+//geting all orders
 
-//geting all orders 
-
-router.post('/',async(req,res)=>{  
-  try{
-const orders = await Order.find().populate('owner',['email','name'])
-res.status(200).json(orders);
-  }catch(e){
-res.status(400).json(e.message)
+router.get('/list', async(req, res)=> {
+  console.log('ABC')
+  try {
+    const orders = await Order.find().populate('owner', ['email', 'name']);
+    res.status(200).json(orders);
+  } catch (e) {
+    res.status(400).json(e.message)
   }
 })
 
-module.exports=router;
+module.exports = router;
