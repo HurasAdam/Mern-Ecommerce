@@ -1,7 +1,6 @@
-const route = require("express").Router();
+const router = require("express").Router();
 const Order = require("../models/Order");
 const User = require("../models/User");
-const router = require("./userRoutes");
 
 //Creating an order
 
@@ -37,14 +36,27 @@ router.post("/", async (req, res) => {
 
 //geting all orders
 
-router.get('/list', async(req, res)=> {
-  console.log('ABC')
+router.get("/", async (req, res) => {
   try {
+    const orders = await Order.find().populate("owner", ["email", "name"]);
+    res.status(200).json(orders);
+  } catch (e) {
+    res.status(400).json(e.message);
+  }
+});
+
+// Shipping order
+router.patch("/:id/mark-shipped", async (req, res) => {
+  const { ownerId } = req.body;
+  const { id } = req.params;
+  try {
+    const user = await User.findById(ownerId);
+    await Order.findByIdAndUpdate(id, {status:"shipped"});
     const orders = await Order.find().populate('owner', ['email', 'name']);
     res.status(200).json(orders);
   } catch (e) {
-    res.status(400).json(e.message)
+    res.status(400).json(e.message);
   }
-})
+});
 
 module.exports = router;
