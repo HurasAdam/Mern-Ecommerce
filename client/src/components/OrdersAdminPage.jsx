@@ -9,7 +9,7 @@ function OrdersAdminPage() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
   const products = useSelector((state) => state.products);
-  const [orderToShow, setORderToShow] = useState([]);
+  const [orderToShow, setOrderToShow] = useState([]);
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -22,14 +22,15 @@ function OrdersAdminPage() {
   function showOrder(productsObj) {
     let productsToShow = products.filter((product) => productsObj[product._id]);
     productsToShow = productsToShow.map((product) => {
-      const productCopy = { ...product };
-      productCopy.count = productsObj[product._id];
-      delete productCopy.description;
-      return productCopy;
+        const productCopy = { ...product };
+        productCopy.count = productsObj[product._id];
+        delete productCopy.description;
+        return productCopy;
     });
+    console.log(productsToShow);
     setShow(true);
-    setORderToShow(productsToShow);
-  }
+    setOrderToShow(productsToShow);
+}
 
   useEffect(() => {
     setLoading(true);
@@ -48,7 +49,7 @@ function OrdersAdminPage() {
     return <Loading />;
   }
 
-  console.log(orders);
+
 
   if (orders.length === 0) {
     return <h1 className="text-center pt-4">No orders yet</h1>;
@@ -89,7 +90,7 @@ function OrdersAdminPage() {
                 <td>
                   <span
                     style={{ cursor: "pointer" }}
-                    onClick={() => showOrder(products)}
+                    onClick={() => showOrder(order.products)}
                   >
                     View order
                     <FontAwesomeIcon
@@ -106,9 +107,10 @@ function OrdersAdminPage() {
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Order details</Modal.Title>
+          </Modal.Header>
           {orderToShow.map((order) => {
             return (
-              <div className="order-details__container">
+              <div className="order-details__container d-flex justify-content-evenly py-2">
                 <img
                   src={order.pictures[0].url}
                   alt=""
@@ -117,12 +119,15 @@ function OrdersAdminPage() {
                 <p>
                   <span>{order.count} x</span>
                   {order.name}
-                  <p>Price ${Number(order.price)*product.count}</p>
+                  <p>Price ${Number(order.price)*order.count}</p>
                 </p>
               </div>
             );
           })}
-        </Modal.Header>
+      
+<Modal.Footer>
+  <Button variant="secondary" onClick={handleClose}>Close</Button>
+</Modal.Footer>
       </Modal>
     </>
   );

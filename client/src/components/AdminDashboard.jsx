@@ -3,6 +3,7 @@ import { Container, Tab, Row, Col, Nav } from "react-bootstrap";
 import "./AdminDashboard.css";
 import DashboardProducts from "./DashboardProducts";
 import OrdersAdminPage from './OrdersAdminPage';
+import ClientsAdminPage from "./ClientsAdminPage";
 function AdminDashboard() {
   return (
     <Container>
@@ -27,6 +28,9 @@ function AdminDashboard() {
             </Tab.Pane>
             <Tab.Pane eventKey="orders">
 <OrdersAdminPage/>
+            </Tab.Pane>
+            <Tab.Pane eventKey="clients">
+<ClientsAdminPage/>
             </Tab.Pane>
           </Col>
         </Row>
