@@ -9,8 +9,8 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 
 const io = new Server(server, {
-  cors: "*",
-  method: "*",
+  cors: "http://localhost:3001",
+  method: ['GET','POST','PATCH','DELETE'],
 });
 
 const User = require("./models/User");
@@ -47,3 +47,5 @@ mongoose.connect(process.env.MONGO_URI).then(() => {
     console.log(`DB Connected : Server running on port${process.env.PORT}`);
   });
 });
+
+app.set('socketio',io);
