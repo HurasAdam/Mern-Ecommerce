@@ -6,12 +6,11 @@ require("dotenv").config();
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
 const cors = require("cors");
 const server = http.createServer(app);
-const { Server } = require("socket.io");
-
+const {Server} = require('socket.io');
 const io = new Server(server, {
-  cors: "http://localhost:3001",
-  method: ['GET','POST','PATCH','DELETE'],
-});
+  cors: 'http://localhost:3001',
+  methods: ['GET', 'POST', 'PATCH', "DELETE"]
+})
 
 const User = require("./models/User");
 const { default: mongoose } = require("mongoose");

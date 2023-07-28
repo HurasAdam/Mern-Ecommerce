@@ -1,17 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 // appApi
-import appApi from "../services/appApi"
-
+import appApi from "../services/appApi";
 const initialState = null;
 
 export const userSlice = createSlice({
-    name: "user",
+    name: "products",
     initialState,
     reducers: {
-        logout: () =>{
-            return initialState
-        } ,
+        logout: () => initialState,
         addNotification: (state, action) => {
             state.notifications.unshift(action.payload);
         },
@@ -29,7 +26,6 @@ export const userSlice = createSlice({
         builder.addMatcher(appApi.endpoints.increaseCartProduct.matchFulfilled, (_, { payload }) => payload);
         builder.addMatcher(appApi.endpoints.decreaseCartProduct.matchFulfilled, (_, { payload }) => payload);
         builder.addMatcher(appApi.endpoints.createOrder.matchFulfilled, (_, { payload }) => payload);
-        
     },
 });
 export const { logout, addNotification, resetNotifications } = userSlice.actions;

@@ -20,20 +20,28 @@ import { addNotification } from "./features/userSlice";
 function App() {
   const user = useSelector((state) => state.user);
   const dispatch=useDispatch()
-  useEffect(()=>{
-    const socket=io("ws:/localhost:4001");
-    socket.off('notification').on('notification',(msgObj,user_id)=>{
-      // LOGIC FOR NOTIFACTION
-      if(user_id===user._id){
-        dispatch(addNotification(msgObj))
-      }
+  useEffect(() => {
+    const socket = io("ws://localhost:4001");
+    socket.off("notification").on("notification", (msgObj, user_id) => {
+
+
+      
+      console.log(user_id)
+        // logic for notification
+        if (user_id === user._id) {
+            dispatch(addNotification(msgObj));
+        }
     });
-    socket.off('new-order').on('new-order',(msgObj)=>{
-      if(user.isAdmin){
-        dispatch(addNotification(msgObj))
-      }
-    })
-  },[])
+
+    socket.off("new-order").on("new-order", (msgObj) => {
+        if (user.isAdmin) {
+            dispatch(addNotification(msgObj));
+        }
+    });
+}, []);
+
+console.log(user)
+
   return (
     <div className="App">
       <BrowserRouter>
