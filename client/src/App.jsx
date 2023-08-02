@@ -21,22 +21,22 @@ function App() {
   const user = useSelector((state) => state.user);
   const dispatch=useDispatch()
   useEffect(() => {
-    const socket = io("ws://localhost:4001");
-    socket.off("notification").on("notification", (msgObj, user_id) => {
+    const socket = io("ws://localhost:3001");
+    socket.off("random").on("random", (message) => {
 
 
       
-      console.log(user_id)
+      console.log(message)
         // logic for notification
-        if (user_id === user._id) {
-            dispatch(addNotification(msgObj));
-        }
-    });
+    //     if (user_id === user._id) {
+    //         dispatch(addNotification(msgObj));
+    //     }
+    // });
 
-    socket.off("new-order").on("new-order", (msgObj) => {
-        if (user.isAdmin) {
-            dispatch(addNotification(msgObj));
-        }
+    // socket.off("new-order").on("new-order", (msgObj) => {
+    //     if (user.isAdmin) {
+    //         dispatch(addNotification(msgObj));
+    //     }
     });
 }, []);
 
