@@ -22,21 +22,17 @@ function App() {
   const dispatch=useDispatch()
   useEffect(() => {
     const socket = io("ws://localhost:3001");
-    socket.off("random").on("random", (message) => {
+    socket.off("notofication").on("notification", (msgObj,user_id) => {
+      // logic for notification 
+        if (user_id === user._id) {
+            dispatch(addNotification(msgObj));
+        }
+    });
 
-
-      
-      console.log(message)
-        // logic for notification
-    //     if (user_id === user._id) {
-    //         dispatch(addNotification(msgObj));
-    //     }
-    // });
-
-    // socket.off("new-order").on("new-order", (msgObj) => {
-    //     if (user.isAdmin) {
-    //         dispatch(addNotification(msgObj));
-    //     }
+    socket.off("new-order").on("new-order", (msgObj) => {
+        if (user.isAdmin) {
+            dispatch(addNotification(msgObj));
+        }
     });
 }, []);
 

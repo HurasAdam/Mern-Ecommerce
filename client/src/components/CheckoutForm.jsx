@@ -23,7 +23,7 @@ if(!stripe||!elements||user.cart.count<=0){
 }
 else{
     setPaying(true);
-    const {client_secret}=await fetch("http://127.0.0.1:4001/create-payment",{
+    const {client_secret}=await fetch("http://127.0.0.1:3001/create-payment",{
         method:"POST",
         headers:{
             "Content-Type":"application/json"
