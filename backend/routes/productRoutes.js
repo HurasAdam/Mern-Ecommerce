@@ -4,9 +4,12 @@ const User = require("../models/User");
 
 // get products
 router.get("/", async (req, res) => {
+
+
   try {
     const products = await Product.find();
     res.status(200).json(products);
+ 
   } catch (e) {
     res.status(400).json(e.message);
   }
@@ -72,8 +75,11 @@ router.delete("/:id", async (req, res) => {
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
+    const io = req.app.get('socketio');
+    
     const product = await Product.findById(id);
     const similar = await Product.find({ category: product.category }).limit(5);
+  
     res.status(200).json({ product, similar });
   } catch (e) {
     res.status(400).json(e.message);
