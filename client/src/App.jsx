@@ -22,11 +22,13 @@ function App() {
   const dispatch=useDispatch()
   useEffect(() => {
     const socket = io("ws://localhost:3001");
-    socket.off("notofication").on("notification", (msgObj,user_id) => {
+    socket.off("new-order").on("new-order", (msgObj,user_id) => {
       // logic for notification 
         if (user_id === user._id) {
             dispatch(addNotification(msgObj));
+            console.log(msgObj)
         }
+        
     });
 
     socket.off("new-order").on("new-order", (msgObj) => {
@@ -34,6 +36,9 @@ function App() {
             dispatch(addNotification(msgObj));
         }
     });
+
+
+
 }, []);
 
 console.log(user)

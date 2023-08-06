@@ -47,7 +47,7 @@ mongoose.connect(process.env.MONGO_URI).then(() => {
 
     io.on("connection", (socket) => {
       console.log(`connected - socketID:${socket.id}`);
-   
+     
     });
 
     app.set("socketio", io);
