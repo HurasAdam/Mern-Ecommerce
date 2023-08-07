@@ -22,7 +22,7 @@ function App() {
   const dispatch=useDispatch()
   useEffect(() => {
     const socket = io("ws://localhost:3001");
-    socket.off("new-order").on("new-order", (msgObj,user_id) => {
+    socket.off("notification").on("notification", (msgObj,user_id) => {
       // logic for notification 
         if (user_id === user._id) {
             dispatch(addNotification(msgObj));
@@ -34,6 +34,7 @@ function App() {
     socket.off("new-order").on("new-order", (msgObj) => {
         if (user.isAdmin) {
             dispatch(addNotification(msgObj));
+            console.log(msgObj)
         }
     });
 

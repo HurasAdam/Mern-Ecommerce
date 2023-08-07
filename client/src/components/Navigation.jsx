@@ -1,18 +1,38 @@
 import { Navbar, NavDropdown, Nav, Container, Button } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
+import {useRef,useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import { faBell } from "@fortawesome/free-solid-svg-icons";
 import "../components/Navigation.css";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../features/userSlice";
+import { logout, resetNotifications } from "../features/userSlice";
+import axios from "axios";
 
 export const Navigation = () => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
-
+const bellRef= useRef(null);
+const notificationRef=useRef(null);
+const [bellPosition,setBellPosition]=useState({})
   function handleLogout() {
     dispatch(logout());
   }
+
+  const unreadNotifications = user?.notifications?.reduce((acc,current)=>{
+    if(current.status==="unread")return acc+1;
+    return acc
+  },0)
+
+function handleToggleNotifications(){
+  const position = bellRef.current.getBoundingClientRect();
+  setBellPosition(position);
+  notificationRef.current.style.display=notificationRef.current.style.display==="block"?"none":"block"
+  dispatch(resetNotifications());
+  if(unreadNotifications>1){
+  axios.post(`/users/${user._id}/updateNotifications`);
+}
+}
 
   return (
     <Navbar bg="light" expand="lg">
@@ -43,7 +63,12 @@ export const Navigation = () => {
                 </Nav.Link>
               </LinkContainer>
             )}
+
             {user && (
+              <>
+             <Nav.Link style={{position:"relative"}} onClick={handleToggleNotifications}>
+             <FontAwesomeIcon icon={faBell} ref={bellRef} data-count={unreadNotifications||null} />
+             </Nav.Link>
               <NavDropdown title={`${user.email}`} id="basic-nav-dropdown">
                 {user.isAdmin && (
                   <>
@@ -76,10 +101,21 @@ export const Navigation = () => {
                   Logout
                 </Button>
               </NavDropdown>
+              </>
             )}
           </Nav>
         </Navbar.Collapse>
       </Container>
+      {/* Notifications */}
+    <div className="notofications-container" style={{position:'absolute', }}>
+      {user&&user.notifications.map((notification)=>{
+        return(<p className={`notification-${notification.status}`}>
+          {notification.message}
+          <br />
+          <span>{notification.time}</span>
+        </p>)
+      })}
+    </div>
     </Navbar>
   );
 };
