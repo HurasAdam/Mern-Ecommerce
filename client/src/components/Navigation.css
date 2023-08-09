@@ -31,3 +31,11 @@
   width: 200px;
   z-index: 99;
 }
+
+.notification-read{
+    background-color: lightblue;
+
+}
+.notofication-unread{
+    background-color: lightcoral;
+}

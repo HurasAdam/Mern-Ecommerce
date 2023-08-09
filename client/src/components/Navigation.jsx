@@ -19,19 +19,17 @@ const [bellPosition,setBellPosition]=useState({})
     dispatch(logout());
   }
 
-  const unreadNotifications = user?.notifications?.reduce((acc,current)=>{
-    if(current.status==="unread")return acc+1;
-    return acc
-  },0)
+  const unreadNotifications = user?.notifications?.reduce((acc, current) => {
+    if (current.status == "unread") return acc + 1;
+    return acc;
+}, 0);
 
-function handleToggleNotifications(){
-  const position = bellRef.current.getBoundingClientRect();
-  setBellPosition(position);
-  notificationRef.current.style.display=notificationRef.current.style.display==="block"?"none":"block"
-  dispatch(resetNotifications());
-  if(unreadNotifications>1){
-  axios.post(`/users/${user._id}/updateNotifications`);
-}
+  function handleToggleNotifications() {
+    const position = bellRef.current.getBoundingClientRect();
+    setBellPosition(position);
+    notificationRef.current.style.display = notificationRef.current.style.display === "block" ? "none" : "block";
+    dispatch(resetNotifications());
+    if (unreadNotifications > 0) axios.post(`/users/${user._id}/updateNotifications`);
 }
 
   return (
@@ -107,12 +105,12 @@ function handleToggleNotifications(){
         </Navbar.Collapse>
       </Container>
       {/* Notifications */}
-    <div className="notofications-container" style={{position:'absolute', }}>
+    <div className="notofications-container" ref={notificationRef} style={{ position: "absolute", top: bellPosition.top + 30, left: bellPosition.left, display:"none" }}>
       {user&&user.notifications.map((notification)=>{
         return(<p className={`notification-${notification.status}`}>
           {notification.message}
           <br />
-          <span>{notification.time}</span>
+          <span>{notification.time.split('T')[0]+" "+ notification.time.split('T')[1]}}</span>
         </p>)
       })}
     </div>
