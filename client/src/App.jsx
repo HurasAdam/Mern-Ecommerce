@@ -26,18 +26,20 @@ function App() {
       // logic for notification 
         if (user_id === user._id) {
             dispatch(addNotification(msgObj));
-            console.log(msgObj)
+         
         }
         
     });
 
     socket.off("new-order").on("new-order", (msgObj) => {
+      console.log(msgObj)
         if (user.isAdmin) {
+        
             dispatch(addNotification(msgObj));
-            console.log(msgObj)
+          
         }
     });
-
+    console.log(user)
 
 
 }, []);

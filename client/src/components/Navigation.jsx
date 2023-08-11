@@ -18,7 +18,7 @@ const [bellPosition,setBellPosition]=useState({})
   function handleLogout() {
     dispatch(logout());
   }
-console.log(user)
+  console.log(user)
   const unreadNotifications = user?.notifications?.reduce((acc, current) => {
     if (current.status == "unread") return acc + 1;
     return acc;

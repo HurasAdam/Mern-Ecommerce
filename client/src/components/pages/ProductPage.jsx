@@ -35,7 +35,7 @@ export function ProductPage() {
     });
   }, [id]);
 
-  console.log(id);
+ 
   if (!product) {
     return <Loading />;
   }
