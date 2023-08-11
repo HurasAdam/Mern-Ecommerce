@@ -18,7 +18,7 @@ const [bellPosition,setBellPosition]=useState({})
   function handleLogout() {
     dispatch(logout());
   }
-
+console.log(user)
   const unreadNotifications = user?.notifications?.reduce((acc, current) => {
     if (current.status == "unread") return acc + 1;
     return acc;
@@ -65,7 +65,7 @@ const [bellPosition,setBellPosition]=useState({})
             {user && (
               <>
              <Nav.Link style={{position:"relative"}} onClick={handleToggleNotifications}>
-             <FontAwesomeIcon icon={faBell} ref={bellRef} data-count={unreadNotifications||null} />
+             <FontAwesomeIcon className="notification-bell" icon={faBell} ref={bellRef} data-count={unreadNotifications || null} />
              </Nav.Link>
               <NavDropdown title={`${user.email}`} id="basic-nav-dropdown">
                 {user.isAdmin && (
@@ -106,13 +106,16 @@ const [bellPosition,setBellPosition]=useState({})
       </Container>
       {/* Notifications */}
     <div className="notofications-container" ref={notificationRef} style={{ position: "absolute", top: bellPosition.top + 30, left: bellPosition.left, display:"none" }}>
-      {user&&user.notifications.map((notification)=>{
+      {
+      user?.notifications.length>0?(
+      user&&user.notifications.map((notification)=>{
         return(<p className={`notification-${notification.status}`}>
           {notification.message}
           <br />
           <span>{notification.time.split('T')[0]+" "+ notification.time.split('T')[1]}}</span>
         </p>)
-      })}
+      })):(<p>No notifications yet</p>)
+    }
     </div>
     </Navbar>
   );
