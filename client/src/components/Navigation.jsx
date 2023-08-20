@@ -18,12 +18,13 @@ const [bellPosition,setBellPosition]=useState({})
   function handleLogout() {
     dispatch(logout());
   }
-  console.log(user)
+ 
   const unreadNotifications = user?.notifications?.reduce((acc, current) => {
     if (current.status == "unread") return acc + 1;
+
     return acc;
 }, 0);
-
+console.log(unreadNotifications)
   function handleToggleNotifications() {
     const position = bellRef.current.getBoundingClientRect();
     setBellPosition(position);
@@ -64,8 +65,10 @@ const [bellPosition,setBellPosition]=useState({})
 
             {user && (
               <>
-             <Nav.Link style={{position:"relative"}} onClick={handleToggleNotifications}>
-             <FontAwesomeIcon className="notification-bell" icon={faBell} ref={bellRef} data-count={unreadNotifications || null} />
+             <Nav.Link     style={{position:"relative"}} onClick={handleToggleNotifications}>
+   <div className={`${unreadNotifications===0?'notification-bell-container':'notification-bell-container--active'}`} data-count={unreadNotifications || null}>
+             <FontAwesomeIcon className="notification-bell" icon={faBell} ref={bellRef}  />
+             </div>
              </Nav.Link>
               <NavDropdown title={`${user.email}`} id="basic-nav-dropdown">
                 {user.isAdmin && (

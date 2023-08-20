@@ -39,7 +39,7 @@ function App() {
           
         }
     });
-    console.log(user)
+
 
 
 }, []);

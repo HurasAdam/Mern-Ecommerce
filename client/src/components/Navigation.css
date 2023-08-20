@@ -34,7 +34,7 @@
 .notification-read {
   background-color: lightblue;
 }
-.notofication-unread {
+.notification-unread {
   background-color: lightcoral;
 }
 
@@ -42,17 +42,22 @@
 .notification-bell{
     position: relative;
 }
-.notification-bell[data-count]:after {
-    position: absolute;
-    right: -0.75em;
-    top: -0.75em;
-    content: attr(data-count);
-    padding: 0.5em;
-    border-radius: 10em;
-    line-height: 0.9em;
-    color: white;
-    background-color: red;
-    text-align: center;
-    min-width: 2em;
-    font: bold 0.4em sans-serif;
+/* .notification-bell[data-count]:after {
+
+} */
+
+
+.notification-bell-container--active::after{
+  position: absolute;
+  right:0;
+  top: 0.75em;
+  content: attr(data-count);
+  padding: 0.5em;
+  border-radius: 10em;
+  line-height: 0.9em;
+  color: white;
+  background-color: red;
+  text-align: center;
+  min-width: 2em;
+  font: bold 0.4em sans-serif;
 }
