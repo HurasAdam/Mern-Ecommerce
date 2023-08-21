@@ -48,4 +48,22 @@ res.json(user.orders);
   }
 });
 
+
+// Update user notifications
+
+router.post('/:id/updateNotifications', async(req, res)=> {
+  const {id} = req.params;
+  try {
+    const user = await User.findById(id);
+    user.notifications.forEach((notif) => {
+      notif.status = "read"
+    });
+    user.markModified('notifications');
+    await user.save();
+    res.status(200).send(user);
+  } catch (e) {
+    res.status(400).send(e.message)
+  }
+})
+
 module.exports = router;
