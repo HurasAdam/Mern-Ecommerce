@@ -90,6 +90,15 @@ export const appApi = createApi({
                 body,
             }),
         }),
+
+        // toggleNotificationStatus
+        toggleNotificationStatus: builder.mutation({
+            query: (id) => ({
+                url: `/users/${id}/updateNotifications`,
+                method: "POST",
+              
+            }),
+        }),
     }),
 });
 
@@ -104,6 +113,7 @@ export const {
     useCreateOrderMutation,
     useDeleteProductMutation,
     useUpdateProductMutation,
+    useToggleNotificationStatusMutation,
 } = appApi;
 
 export default appApi;

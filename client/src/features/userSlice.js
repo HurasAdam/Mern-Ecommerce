@@ -17,6 +17,7 @@ export const userSlice = createSlice({
                 obj.status = "read";
             });
         },
+   
     },
     extraReducers: (builder) => {
         builder.addMatcher(appApi.endpoints.signup.matchFulfilled, (_, { payload }) => payload);
@@ -26,6 +27,7 @@ export const userSlice = createSlice({
         builder.addMatcher(appApi.endpoints.increaseCartProduct.matchFulfilled, (_, { payload }) => payload);
         builder.addMatcher(appApi.endpoints.decreaseCartProduct.matchFulfilled, (_, { payload }) => payload);
         builder.addMatcher(appApi.endpoints.createOrder.matchFulfilled, (_, { payload }) => payload);
+       
     },
 });
 export const { logout, addNotification, resetNotifications } = userSlice.actions;

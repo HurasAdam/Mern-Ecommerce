@@ -8,13 +8,16 @@ import "../components/Navigation.css";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, resetNotifications } from "../features/userSlice";
 import axios from "axios";
-
+import {useToggleNotificationStatusMutation} from "../services/appApi"
 export const Navigation = () => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 const bellRef= useRef(null);
 const notificationRef=useRef(null);
 const [bellPosition,setBellPosition]=useState({})
+const [toggle, { isLoading }] = useToggleNotificationStatusMutation();
+
+
   function handleLogout() {
     dispatch(logout());
   }
@@ -29,8 +32,10 @@ console.log(unreadNotifications)
     const position = bellRef.current.getBoundingClientRect();
     setBellPosition(position);
     notificationRef.current.style.display = notificationRef.current.style.display === "block" ? "none" : "block";
-    dispatch(resetNotifications());
-    if (unreadNotifications > 0) axios.post(`/users/${user._id}/updateNotifications`);
+    
+   toggle(user._id)
+
+   
 }
 
   return (
