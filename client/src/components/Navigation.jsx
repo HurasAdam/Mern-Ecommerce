@@ -3,6 +3,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import {useRef,useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
 import "../components/Navigation.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,7 +17,7 @@ const bellRef= useRef(null);
 const notificationRef=useRef(null);
 const [bellPosition,setBellPosition]=useState({})
 const [toggle, { isLoading }] = useToggleNotificationStatusMutation();
-
+const [toggleNotifications,setToggleNotifications]=useState(false)
 
   function handleLogout() {
     dispatch(logout());
@@ -31,12 +32,14 @@ const [toggle, { isLoading }] = useToggleNotificationStatusMutation();
   function handleToggleNotifications() {
     const position = bellRef.current.getBoundingClientRect();
     setBellPosition(position);
-    notificationRef.current.style.display = notificationRef.current.style.display === "block" ? "none" : "block";
-    console.log(unreadNotifications)
+    setToggleNotifications(!toggleNotifications)
+   
    toggle(user._id)
 dispatch(resetNotifications())
    
 }
+
+
 
   return (
     <Navbar bg="light" expand="lg">
@@ -113,7 +116,7 @@ dispatch(resetNotifications())
         </Navbar.Collapse>
       </Container>
       {/* Notifications */}
-    <div className="notofications-container" ref={notificationRef} style={{ position: "absolute", top: bellPosition.top + 30, left: bellPosition.left, display:"none" }}>
+    <div className="notofications-container" ref={notificationRef} style={{ display: toggleNotifications ? "block" : "none" }} >
       {
       user?.notifications.length>0?(
       user&&user.notifications.map((notification)=>{
@@ -121,7 +124,11 @@ dispatch(resetNotifications())
           {notification.message}
           <br />
           <span>{notification.time.split('T')[0]+" "+ notification.time.split('T')[1]}}</span>
-          <span className="notification-clearBtn">X</span>
+          <FontAwesomeIcon
+          onClick={()=>setToggleNotifications(!toggleNotifications)}
+          className="notification-clearBtn "
+                  icon={faXmark}
+                />
         </p>)
       })):(<p>No notifications yet</p>)
     }

@@ -23,36 +23,41 @@
 }
 .notofications-container {
   padding: 20px;
-  max-height: 200px;
+  max-height: 250px;
   overflow-y: scroll;
   border: 1px solid gray;
   background-color: white;
-  width: 200px;
+  width: 400px;
   z-index: 99;
-
-word-wrap: break-word;
-
+  position: absolute;
+  top:50px;
+  right:5vw;
+  word-wrap: break-word;
 }
 
 .notification-read {
   background-color: lightblue;
+  padding: 0px 5px;
+  display: flex;
+  flex:4;
 }
 .notification-unread {
   background-color: lightcoral;
+  padding: 0px 5px;
+  display: flex;
+  flex:4;
 }
 
-
-.notification-bell{
-    position: relative;
+.notification-bell {
+  position: relative;
 }
 /* .notification-bell[data-count]:after {
 
 } */
 
-
-.notification-bell-container--active::after{
+.notification-bell-container--active::after {
   position: absolute;
-  right:0;
+  right: 0;
   top: 0.75em;
   content: attr(data-count);
   padding: 0.5em;
@@ -64,10 +69,21 @@ word-wrap: break-word;
   min-width: 2em;
   font: bold 0.4em sans-serif;
 }
-.notification-clearBtn{
- 
+.notification-clearBtn {
   width: 30px;
   height: 20px;
   cursor: pointer;
+  flex:1;
+}
 
+.notification-clearBtn:hover{
+  border-radius: 20%;
+  background-color: rgb(137, 53, 60);
+  color:white;
+  transition: all 0.1s ease-in-out;
+}
+
+.navbar{
+
+  position: relative;
 }
