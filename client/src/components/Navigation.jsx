@@ -27,14 +27,14 @@ const [toggle, { isLoading }] = useToggleNotificationStatusMutation();
 
     return acc;
 }, 0);
-console.log(unreadNotifications)
+
   function handleToggleNotifications() {
     const position = bellRef.current.getBoundingClientRect();
     setBellPosition(position);
     notificationRef.current.style.display = notificationRef.current.style.display === "block" ? "none" : "block";
-    
+    console.log(unreadNotifications)
    toggle(user._id)
-
+dispatch(resetNotifications())
    
 }
 
@@ -121,6 +121,7 @@ console.log(unreadNotifications)
           {notification.message}
           <br />
           <span>{notification.time.split('T')[0]+" "+ notification.time.split('T')[1]}}</span>
+          <span className="notification-clearBtn">X</span>
         </p>)
       })):(<p>No notifications yet</p>)
     }

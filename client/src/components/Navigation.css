@@ -29,6 +29,9 @@
   background-color: white;
   width: 200px;
   z-index: 99;
+
+word-wrap: break-word;
+
 }
 
 .notification-read {
@@ -60,4 +63,11 @@
   text-align: center;
   min-width: 2em;
   font: bold 0.4em sans-serif;
+}
+.notification-clearBtn{
+ 
+  width: 30px;
+  height: 20px;
+  cursor: pointer;
+
 }

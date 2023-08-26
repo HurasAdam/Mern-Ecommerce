@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const Order = require("../models/Order");
 const User = require("../models/User");
-
+const { v4: uuidv4 } = require('uuid');
 //creating an order
 
 router.post("/", async (req, res) => {
@@ -24,6 +24,7 @@ router.post("/", async (req, res) => {
 
     user.orders.push(order);
     const notification = {
+      id:uuidv4(),
       status: "unread",
       message: `New order from ${user.name}`,
       time: new Date(),
